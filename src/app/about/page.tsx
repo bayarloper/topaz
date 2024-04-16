@@ -5,13 +5,13 @@ import React, { useState, useEffect } from "react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 
-interface aboutData{
-    title:string
-    description: string
+interface aboutData {
+  title: string;
+  description: string;
 }
 
 const About = () => {
-  const [aboutData, setAboutData] = useState <aboutData[]>([]);
+  const [aboutData, setAboutData] = useState<aboutData[]>([]);
   useEffect(() => {
     fetchData();
   }, []);
@@ -19,9 +19,9 @@ const About = () => {
   const fetchData = async () => {
     try {
       const response = await fetch("http://localhost:3001/api/data", {
-        method: "GET"
+        method: "GET",
       });
-      console.log(response)
+      console.log(response);
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
@@ -43,7 +43,7 @@ const About = () => {
           </div>
         ))}
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

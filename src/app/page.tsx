@@ -1,29 +1,57 @@
 "use client";
-
+import React, { useState } from "react";
+import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
+import { RxDotFilled } from "react-icons/rx";
 import Image from "next/image";
-import { useEffect } from 'react';
-import Swiper from 'swiper/bundle';
 
-
+interface aboutData {
+  title: string;
+  description: string;
+}
 
 export default function Home() {
+  const slides = [
+    {
+      url: "/background.jpg",
+    },
+    {
+      url: "/slider2.jpg",
+    },
+    {
+      url: "/slider3.jpg",
+    },
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const prevSlide = () => {
+    const isFirstSlide = currentIndex === 0;
+    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+  };
+
+  const nextSlide = () => {
+    const isLastSlide = currentIndex === slides.length - 1;
+    const newIndex = isLastSlide ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+  };
 
   return (
     <main className="blur-back flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
+      <div className="z-10 w-full max-w-6xl items-center justify-between font-mono text-sm lg:flex">
         <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
           <a
             className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+            href="/"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Image
-              src="/vercel.svg"
+              src="/logo.png"
               alt="Vercel Logo"
               className="dark:invert"
-              width={100}
-              height={24}
+              width={150}
+              height={50}
               priority
             />
           </a>
@@ -33,18 +61,22 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="relative z-[1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className="mx-auto max-w-6xl px-4 h-[600px] w-full m-auto py-8 relative group rounded">
+        <div
+          style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
+          className="w-full h-full rounded-lg bg-center bg-cover duration-500"
+        ></div>
+        {/* Left Arrow */}
+        <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-10 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+          <BsChevronCompactLeft onClick={prevSlide} size={15} />
+        </div>
+        {/* Right Arrow */}
+        <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-10 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+          <BsChevronCompactRight onClick={nextSlide} size={15} />
+        </div>
       </div>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
+      <div className="mt-15 mb-15 grid text-center lg:mb-0 lg:w-full lg:max-w-6xl lg:grid-cols-4 lg:text-left">
         <a
           href="/about"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
