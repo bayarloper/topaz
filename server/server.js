@@ -16,8 +16,13 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 
 // Define your API endpoints
-app.get("/api/data", (req, res) => {
+app.get("/api/about", (req, res) => {
   const data = db.prepare("SELECT * FROM about").all();
+  res.json(data);
+});
+
+app.get("/api/blogpost", (req, res) => {
+  const data = db.prepare("SELECT * FROM blog_posts").all();
   res.json(data);
 });
 

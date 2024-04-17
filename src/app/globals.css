@@ -28,3 +28,40 @@ body {
     text-wrap: balance;
   }
 }
+
+
+.custom-slider-container {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.custom-slider {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.custom-slide {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.custom-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1;
+}
+
+.custom-prev {
+  left: 0;
+}
+
+.custom-next {
+  right: 0;
+}
