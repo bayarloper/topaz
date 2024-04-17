@@ -8,7 +8,7 @@
     "lint": "next lint",
     "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "start:frontend": "next start",
-    "start:backend": "cd server && node server"
+    "start:backend": "cd server && npm install && node server.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
