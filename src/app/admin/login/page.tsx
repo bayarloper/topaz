@@ -21,7 +21,7 @@ const LoginPage = () => {
             login(token);
 
             // Redirect to the dashboard page upon successful login
-            router.push('/dashboard');
+            router.push('/admin/dashboard');
         } else {
             // Handle invalid credentials
             console.error('Invalid credentials');
