@@ -13,6 +13,7 @@ interface aboutData {
 }
 
 export default function Home() {
+  
   const slides = [
     {
       url: "/background.jpg",

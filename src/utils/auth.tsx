@@ -11,6 +11,7 @@ export const login = (token: string) => {
 // Function to logout the user and remove the token from local storage
 export const logout = () => {
     localStorage.removeItem(TOKEN_KEY);
+    window.location.reload();
 };
 
 // Function to retrieve the token from local storage

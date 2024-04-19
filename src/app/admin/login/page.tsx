@@ -8,12 +8,12 @@ const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
-
+    
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
         // Simulated login logic, replace it with your actual authentication logic
-        if (username === 'admin' && password === 'password') {
+        if (username === 'admin' && password === '88553678') {
             // Simulated token, replace it with the actual token received from your server
             const token = 'simulated_token';
 
