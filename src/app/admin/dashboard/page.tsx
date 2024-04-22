@@ -1,23 +1,24 @@
 "use client";
-import { useState } from 'react';
-import { logout } from '@/utils/auth';
-import AboutDB from '../components/aboutDB';
+import { useState } from "react";
+import { logout } from "@/utils/auth";
+import AboutDB from "../components/aboutDB";
+import BlogList from "../components/blogList";
 const DashboardPage = () => {
-  const [activeTab, setActiveTab] = useState('about'); // Default active tab
+  const [activeTab, setActiveTab] = useState("about"); // Default active tab
 
   const tabs = [
-    { id: 'about', label: 'Бидний тухай' },
-    { id: 'blogs', label: 'Нийтлэл' },
-    { id: 'team', label: 'Эмч нар' }
+    { id: "about", label: "Бидний тухай" },
+    { id: "blogs", label: "Нийтлэл" },
+    { id: "team", label: "Эмч нар" },
   ];
 
-  const handleTabClick = (tabId) => {
+  const handleTabClick = (tabId: any) => {
     setActiveTab(tabId);
   };
 
   const handleLogout = () => {
     // Implement your logout logic here
-    logout()
+    logout();
   };
 
   return (
@@ -28,7 +29,7 @@ const DashboardPage = () => {
           onClick={handleLogout}
           className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
         >
-          Logout
+          Гарах
         </button>
       </div>
       <div className="mb-8">
@@ -38,7 +39,9 @@ const DashboardPage = () => {
               key={tab.id}
               onClick={() => handleTabClick(tab.id)}
               className={`cursor-pointer px-4 py-2 rounded ${
-                activeTab === tab.id ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'
+                activeTab === tab.id
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200 text-gray-800"
               }`}
             >
               {tab.label}
@@ -47,22 +50,25 @@ const DashboardPage = () => {
         </ul>
       </div>
       <div className="border rounded p-4">
-        {activeTab === 'about' && (
+        {activeTab === "about" && (
           <div>
             {/* Database component */}
-            <h2 className="text-xl font-bold mb-4">Database Management</h2>
-            <AboutDB/>
+            <h2 className="text-xl font-bold mb-4">
+              Бидний тухай хуудсыг засварлах
+            </h2>
+            <AboutDB />
             {/* Add your database management component here */}
           </div>
         )}
-        {activeTab === 'blogs' && (
+        {activeTab === "blogs" && (
           <div>
             {/* Blogs component */}
             <h2 className="text-xl font-bold mb-4">Blog Management</h2>
+            <BlogList></BlogList>
             {/* Add your blog management component here */}
           </div>
         )}
-        {activeTab === 'team' && (
+        {activeTab === "team" && (
           <div>
             {/* Team members component */}
             <h2 className="text-xl font-bold mb-4">Team Member Management</h2>
