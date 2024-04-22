@@ -24,6 +24,17 @@ app.get("/api/about", (req, res) => {
   res.json(data);
 });
 
+// Update about data
+app.put("/api/about/:id", (req, res) => {
+  const { id } = req.params;
+  const { title, description } = req.body;
+
+  // Example SQLite query to update data
+  db.prepare("UPDATE about SET title = ?, description = ? WHERE id = ?").run(title, description, id);
+
+  res.sendStatus(200); // Send a success status code
+});
+
 app.get("/api/blogpost", (req, res) => {
   const data = db.prepare("SELECT * FROM blog_posts").all();
   res.json(data);

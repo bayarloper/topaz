@@ -15,7 +15,7 @@ const LoginPage = () => {
         // Simulated login logic, replace it with your actual authentication logic
         if (username === 'admin' && password === '88553678') {
             // Simulated token, replace it with the actual token received from your server
-            const token = 'simulated_token';
+            const token = 'dG9wYXpob3NwaXRhbC1hZG1pbg==';
 
             // Store the token in local storage
             login(token);

@@ -1,17 +1,77 @@
-// pages/dashboard.js
 "use client";
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { logout } from '../../../utils/auth';
-
+import { useState } from 'react';
+import { logout } from '@/utils/auth';
+import AboutDB from '../components/aboutDB';
 const DashboardPage = () => {
-    // Render your dashboard content here
-    return (
-        <div>
-            <h1>Welcome to Dashboard</h1>
-            <button onClick={(logout)}>Click Me</button>
-        </div>
-    );
+  const [activeTab, setActiveTab] = useState('about'); // Default active tab
+
+  const tabs = [
+    { id: 'about', label: 'Бидний тухай' },
+    { id: 'blogs', label: 'Нийтлэл' },
+    { id: 'team', label: 'Эмч нар' }
+  ];
+
+  const handleTabClick = (tabId) => {
+    setActiveTab(tabId);
+  };
+
+  const handleLogout = () => {
+    // Implement your logout logic here
+    logout()
+  };
+
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <button
+          onClick={handleLogout}
+          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+        >
+          Logout
+        </button>
+      </div>
+      <div className="mb-8">
+        <ul className="flex space-x-4">
+          {tabs.map((tab) => (
+            <li
+              key={tab.id}
+              onClick={() => handleTabClick(tab.id)}
+              className={`cursor-pointer px-4 py-2 rounded ${
+                activeTab === tab.id ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'
+              }`}
+            >
+              {tab.label}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="border rounded p-4">
+        {activeTab === 'about' && (
+          <div>
+            {/* Database component */}
+            <h2 className="text-xl font-bold mb-4">Database Management</h2>
+            <AboutDB/>
+            {/* Add your database management component here */}
+          </div>
+        )}
+        {activeTab === 'blogs' && (
+          <div>
+            {/* Blogs component */}
+            <h2 className="text-xl font-bold mb-4">Blog Management</h2>
+            {/* Add your blog management component here */}
+          </div>
+        )}
+        {activeTab === 'team' && (
+          <div>
+            {/* Team members component */}
+            <h2 className="text-xl font-bold mb-4">Team Member Management</h2>
+            {/* Add your team member management component here */}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default DashboardPage;
