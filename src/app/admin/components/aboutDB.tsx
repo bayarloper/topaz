@@ -1,4 +1,4 @@
-// pages/aboutDB.tsx
+// pages/AboutDB.tsx
 import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
@@ -10,7 +10,7 @@ interface AboutItem {
   description: string;
 }
 
-const aboutDB: React.FC = () => {
+const AboutDB: React.FC = () => {
   const [aboutData, setAboutData] = useState<AboutItem[]>([]);
 
   useEffect(() => {
@@ -86,4 +86,4 @@ const aboutDB: React.FC = () => {
   );
 };
 
-export default aboutDB;
+export default AboutDB;
