@@ -27,7 +27,7 @@ const AdminPricingPanel = () => {
       });
   };
 
-  const handleDeletePlan = (id) => {
+  const handleDeletePlan = (id: string) => {
     axios
       .delete(`http://localhost:3001/api/pricing/${id}`)
       .then((response) => {
@@ -38,7 +38,7 @@ const AdminPricingPanel = () => {
       });
   };
 
-  const handleEditPlan = (plan) => {
+  const handleEditPlan = (plan: any) => {
     setPlanToEdit(plan);
     setFormData(plan);
     setShowEditModal(true);
