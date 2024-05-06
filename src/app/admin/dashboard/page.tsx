@@ -3,12 +3,17 @@ import { useState } from "react";
 import { logout } from "@/utils/auth";
 import AboutDB from "../components/aboutDB";
 import BlogList from "../components/blogList";
+import Services from "../components/services";
+import FAQs from "../components/faq";
+import PersonRequests from "../components/personReq";
+import AdminPricingPanel from "../components/AdminPricingPanel";
 const DashboardPage = () => {
   const [activeTab, setActiveTab] = useState("about"); // Default active tab
 
   const tabs = [
     { id: "about", label: "Бидний тухай" },
     { id: "blogs", label: "Нийтлэл" },
+    { id: "services", label: "Үйлчилгээ" },
     { id: "team", label: "Эмч нар" },
   ];
 
@@ -66,6 +71,16 @@ const DashboardPage = () => {
             <h2 className="text-xl font-bold mb-4">Blog Management</h2>
             <BlogList></BlogList>
             {/* Add your blog management component here */}
+          </div>
+        )}
+        {activeTab === "services" && (
+          <div>
+            {/* Team members component */}
+            <h2 className="text-xl font-bold mb-4">Үйлчилгээ засах, нэмэх</h2>
+            <AdminPricingPanel></AdminPricingPanel>
+            <Services />
+            <FAQs></FAQs>
+            <PersonRequests />
           </div>
         )}
         {activeTab === "team" && (
