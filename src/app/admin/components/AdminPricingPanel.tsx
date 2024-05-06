@@ -1,12 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import axios from "axios";
 
+interface PricingPlan {
+  id: string;
+  title: string;
+  serviceList: string;
+  price: string;
+}
+
 const AdminPricingPanel = () => {
-  const [pricingPlans, setPricingPlans] = useState([]);
+  const [pricingPlans, setPricingPlans] = useState<PricingPlan[]>([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [planToEdit, setPlanToEdit] = useState({});
-  const [formData, setFormData] = useState({
+  const [planToEdit, setPlanToEdit] = useState<PricingPlan | null>(null);
+  const [formData, setFormData] = useState<PricingPlan>({
+    id: "",
     title: "",
     serviceList: "",
     price: "",
@@ -18,7 +26,7 @@ const AdminPricingPanel = () => {
 
   const fetchPricingPlans = () => {
     axios
-      .get("http://localhost:3001/api/pricing")
+      .get<PricingPlan[]>("http://localhost:3001/api/pricing")
       .then((response) => {
         setPricingPlans(response.data);
       })
@@ -30,7 +38,7 @@ const AdminPricingPanel = () => {
   const handleDeletePlan = (id: string) => {
     axios
       .delete(`http://localhost:3001/api/pricing/${id}`)
-      .then((response) => {
+      .then(() => {
         fetchPricingPlans();
       })
       .catch((error) => {
@@ -38,7 +46,7 @@ const AdminPricingPanel = () => {
       });
   };
 
-  const handleEditPlan = (plan: any) => {
+  const handleEditPlan = (plan: PricingPlan) => {
     setPlanToEdit(plan);
     setFormData(plan);
     setShowEditModal(true);
@@ -46,6 +54,7 @@ const AdminPricingPanel = () => {
 
   const handleAddPlan = () => {
     setFormData({
+      id: "",
       title: "",
       serviceList: "",
       price: "",
@@ -54,11 +63,10 @@ const AdminPricingPanel = () => {
   };
 
   const handleSavePlan = () => {
-    if (showEditModal) {
-      // Update Plan
+    if (showEditModal && planToEdit) {
       axios
         .put(`http://localhost:3001/api/pricing/${planToEdit.id}`, formData)
-        .then((response) => {
+        .then(() => {
           fetchPricingPlans();
           setShowEditModal(false);
         })
@@ -66,10 +74,9 @@ const AdminPricingPanel = () => {
           console.error("Error updating pricing plan:", error);
         });
     } else {
-      // Add Plan
       axios
         .post("http://localhost:3001/api/pricing", formData)
-        .then((response) => {
+        .then(() => {
           fetchPricingPlans();
           setShowAddModal(false);
         })
@@ -79,7 +86,7 @@ const AdminPricingPanel = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -190,7 +197,6 @@ const AdminPricingPanel = () => {
         </tbody>
       </table>
 
-      {/* Add Plan Modal */}
       {showAddModal && (
         <div
           style={{
@@ -283,7 +289,6 @@ const AdminPricingPanel = () => {
         </div>
       )}
 
-      {/* Edit Plan Modal */}
       {showEditModal && (
         <div
           style={{
