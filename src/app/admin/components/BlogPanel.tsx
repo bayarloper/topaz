@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const BlogList = () => {
+const BlogPanel = () => {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
@@ -89,4 +89,4 @@ const BlogList = () => {
   );
 };
 
-export default BlogList;
+export default BlogPanel;

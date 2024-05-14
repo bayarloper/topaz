@@ -10,7 +10,7 @@ interface AboutItem {
   description: string;
 }
 
-const AboutDB: React.FC = () => {
+const AboutPanel: React.FC = () => {
   const [aboutData, setAboutData] = useState<AboutItem[]>([]);
 
   useEffect(() => {
@@ -86,4 +86,4 @@ const AboutDB: React.FC = () => {
   );
 };
 
-export default AboutDB;
+export default AboutPanel;

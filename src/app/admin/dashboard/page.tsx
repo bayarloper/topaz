@@ -1,12 +1,14 @@
 "use client";
 import { useState } from "react";
 import { logout } from "@/utils/auth";
-import AboutDB from "../components/aboutDB";
-import BlogList from "../components/blogList";
-import Services from "../components/services";
-import FAQs from "../components/faq";
-import PersonRequests from "../components/personReq";
-import AdminPricingPanel from "../components/AdminPricingPanel";
+import AboutDB from "../components/AboutPanel";
+import BlogList from "../components/BlogPanel";
+import Services from "../components/ServicePanel";
+import FAQs from "../components/FaqPanel";
+import PersonRequests from "../components/ItemPanel";
+import AdminPricingPanel from "../components/PricintPanel";
+import WorkItemDB from "../components/workItemPanel";
+
 const DashboardPage = () => {
   const [activeTab, setActiveTab] = useState("about"); // Default active tab
 
@@ -14,6 +16,7 @@ const DashboardPage = () => {
     { id: "about", label: "Бидний тухай" },
     { id: "blogs", label: "Нийтлэл" },
     { id: "services", label: "Үйлчилгээ" },
+    { id: "workItem", label: "Бүтэц" },
     { id: "team", label: "Эмч нар" },
   ];
 
@@ -81,6 +84,12 @@ const DashboardPage = () => {
             <Services />
             <FAQs></FAQs>
             <PersonRequests />
+          </div>
+        )}
+        {activeTab === "workItem" && (
+          <div>
+            <h2 className="text-xl font-bold mb-4">Бүтэц</h2>
+            <WorkItemDB></WorkItemDB>
           </div>
         )}
         {activeTab === "team" && (
