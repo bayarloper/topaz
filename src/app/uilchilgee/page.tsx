@@ -4,6 +4,7 @@ import axios from "axios";
 import Navbar from "@/components/navbar";
 import FAQComponent from "@/components/faq";
 import RequestsTable from "@/components/RequestsTable";
+import Footer from "@/components/footer";
 import GuestPricingPanel from "@/components/GuestPricingPanel";
 
 export default function Services() {
@@ -39,8 +40,9 @@ export default function Services() {
                   </p>
                 </div>
               </div>
+              <GuestPricingPanel></GuestPricingPanel>
+
               <div className="-mx-4 flex flex-wrap">
-                <GuestPricingPanel></GuestPricingPanel>
                 {services.map((service) => (
                   <ServiceCard
                     key={service.id}
@@ -56,6 +58,7 @@ export default function Services() {
           </section>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 }
@@ -64,10 +67,10 @@ const ServiceCard = ({ icon, title, details }) => {
   return (
     <div className="w-full px-4 md:w-1/2 lg:w-1/3 mb-8">
       <div className="bg-white p-10 shadow-md hover:shadow-lg dark:bg-dark-2 md:px-7 xl:px-10 rounded-[20px]">
-        <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-full bg-primary">
+        <div className="h-16 w-16 items-center justify-center rounded-full bg-primary">
           {icon}
         </div>
-        <h4 className="mb-[14px] text-xl font-semibold text-dark dark:text-white">
+        <h4 className="mb-[14px] text-l font-semibold text-dark dark:text-white">
           {title}
         </h4>
         <p className="text-body-color text-sm dark:text-dark-6">{details}</p>

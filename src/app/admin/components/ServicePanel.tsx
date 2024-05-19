@@ -101,7 +101,7 @@ const Services = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-2xl font-bold mt-8">Services</h1>
+      <h1 className="text-sm font-bold mt-8">Services</h1>
       <div className="mt-8">
         <button
           onClick={handleAddService}
@@ -135,13 +135,13 @@ const Services = () => {
                     onClick={() => handleEditService(service)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
                   >
-                    Edit
+                    Засах
                   </button>
                   <button
                     onClick={() => handleDeleteService(service.id)}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                   >
-                    Delete
+                    Устгах
                   </button>
                 </td>
               </tr>
@@ -154,7 +154,7 @@ const Services = () => {
       {showAddModal && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-8 rounded shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">Add Service</h2>
+            <h2 className="text-sm font-bold mb-4">Үйлчилгээ нэмэх</h2>
             <input
               type="text"
               name="title"
@@ -199,7 +199,7 @@ const Services = () => {
       {showEditModal && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-8 rounded shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">Edit Service</h2>
+            <h2 className="text-sm font-bold mb-4">Edit Service</h2>
             <input
               type="text"
               name="title"

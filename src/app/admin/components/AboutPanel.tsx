@@ -67,7 +67,7 @@ const AboutPanel: React.FC = () => {
     <div>
       {aboutData.map((item) => (
         <div key={item.id} className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">{item.title}</h2>
+          <h2 className="text-sm font-semibold mb-2">{item.title}</h2>
           <ReactQuill
             theme="snow"
             value={item.description}

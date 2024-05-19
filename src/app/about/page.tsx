@@ -72,7 +72,7 @@ const About = () => {
 
           {aboutData.map((item, index) => (
             <div key={index}>
-              <h1 className="text-3xl font-bold mb-4">{item.title}</h1>
+              <h1 className="text-xl font-bold mb-4">{item.title}</h1>
               <div
                 className="text-gray-700 mb-4"
                 dangerouslySetInnerHTML={{ __html: item.description }}
