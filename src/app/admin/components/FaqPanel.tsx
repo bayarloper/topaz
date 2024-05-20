@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import axios from "axios";
 
-const FAQs = () => {
-  const [faqs, setFAQs] = useState([]);
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [faqToEdit, setFaqToEdit] = useState({});
+interface FAQ {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+const FAQs: React.FC = () => {
+  const [faqs, setFAQs] = useState<FAQ[]>([]);
+  const [showAddModal, setShowAddModal] = useState<boolean>(false);
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [faqToEdit, setFaqToEdit] = useState<FAQ | null>(null);
   const [formData, setFormData] = useState({
     question: "",
     answer: "",
@@ -13,7 +19,7 @@ const FAQs = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/faqs")
+      .get<FAQ[]>("http://localhost:3001/api/faqs")
       .then((res) => {
         setFAQs(res.data);
       })
@@ -22,26 +28,25 @@ const FAQs = () => {
       });
   }, []);
 
-  const handleDeleteFAQ = (id) => {
+  const handleDeleteFAQ = (id: number): void => {
     axios
       .delete(`http://localhost:3001/api/faqs/${id}`)
       .then((res) => {
         console.log(res.data);
-        // Refresh FAQs after deletion
-        setFAQs(faqs.filter((faq) => faq.id !== id));
+        setFAQs((prevFAQs) => prevFAQs.filter((faq) => faq.id !== id));
       })
       .catch((err) => {
         console.error("Error deleting FAQ:", err);
       });
   };
 
-  const handleEditFAQ = (faq) => {
+  const handleEditFAQ = (faq: FAQ): void => {
     setFaqToEdit(faq);
     setFormData(faq);
     setShowEditModal(true);
   };
 
-  const handleAddFAQ = () => {
+  const handleAddFAQ = (): void => {
     setFormData({
       question: "",
       answer: "",
@@ -49,16 +54,14 @@ const FAQs = () => {
     setShowAddModal(true);
   };
 
-  const handleSaveFAQ = () => {
-    if (showEditModal) {
-      // Update FAQ
+  const handleSaveFAQ = (): void => {
+    if (showEditModal && faqToEdit) {
       axios
         .put(`http://localhost:3001/api/faqs/${faqToEdit.id}`, formData)
         .then((res) => {
           console.log(res.data);
-          // Refresh FAQs after update
           axios
-            .get("http://localhost:3001/api/faqs")
+            .get<FAQ[]>("http://localhost:3001/api/faqs")
             .then((res) => {
               setFAQs(res.data);
               setShowEditModal(false);
@@ -71,14 +74,12 @@ const FAQs = () => {
           console.error("Error updating FAQ:", err);
         });
     } else {
-      // Add FAQ
       axios
         .post("http://localhost:3001/api/faqs", formData)
         .then((res) => {
           console.log(res.data);
-          // Refresh FAQs after addition
           axios
-            .get("http://localhost:3001/api/faqs")
+            .get<FAQ[]>("http://localhost:3001/api/faqs")
             .then((res) => {
               setFAQs(res.data);
               setShowAddModal(false);
@@ -93,7 +94,9 @@ const FAQs = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
