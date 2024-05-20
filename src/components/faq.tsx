@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const FAQComponent = () => {
-  const [faqs, setFaqs] = useState([]);
+interface FAQProps {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+const FAQComponent: React.FC = () => {
+  const [faqs, setFaqs] = useState<FAQProps[]>([]);
 
   useEffect(() => {
     fetchFAQs();
@@ -19,7 +25,12 @@ const FAQComponent = () => {
       });
   };
 
-  const FAQItem = ({ question, answer }) => {
+  interface FAQItemProps {
+    question: string;
+    answer: string;
+  }
+
+  const FAQItem: React.FC<FAQItemProps> = ({ question, answer }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleAccordion = () => {

@@ -2,8 +2,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const RequestsTable = () => {
-  const [requests, setRequests] = useState([]);
+interface RequestProps {
+  id: number;
+  title: string;
+  number: number;
+}
+
+const RequestsTable: React.FC = () => {
+  const [requests, setRequests] = useState<RequestProps[]>([]);
 
   useEffect(() => {
     axios
