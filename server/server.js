@@ -6,6 +6,9 @@ const servicesRoutes = require("./routes/servicesRoutes");
 const faqRoutes = require("./routes/faqRoutes");
 const personReq = require("./routes/personReqRoutes");
 const pricing = require("./routes/pricingRoutes");
+const sections = require("./routes/sectionsRoutes")
+const path = require("path");
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -19,6 +22,8 @@ app.use("/api/services", servicesRoutes);
 app.use("/api/faqs", faqRoutes);
 app.use("/api/personReq", personReq);
 app.use("/api/pricing", pricing);
+app.use("/api/sections", sections);
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

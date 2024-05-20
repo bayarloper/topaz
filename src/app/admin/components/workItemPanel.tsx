@@ -1,174 +1,241 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+// frontend/pages/workItemPanel.tsx
 
-const workItemPanel = () => {
-  const [workItems, setWorkItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [editingId, setEditingId] = useState(null);
-  const [updatedTitle, setUpdatedTitle] = useState("");
-  const [updatedText, setUpdatedText] = useState("");
-  const [updatedImage, setUpdatedImage] = useState(null);
-  const [error, setError] = useState(null);
+import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
 
-  useEffect(() => {
-    fetchWorkItems();
-  }, []);
+interface Section {
+  id: number;
+  title: string;
+  text: string;
+  imageUrl: string;
+}
 
-  const fetchWorkItems = async () => {
-    try {
-      const response = await axios.get("http://localhost:3001/api/workItem");
-      setWorkItems(response.data);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching work items:", error);
-    }
-  };
+interface Form {
+  id: number | null;
+  title: string;
+  text: string;
+}
 
-  const handleEdit = (id, title, text) => {
-    setEditingId(id);
-    setUpdatedTitle(title);
-    setUpdatedText(text);
-  };
+interface ModalProps {
+  show: boolean;
+  handleClose: () => void;
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void; // Fixing the handleSubmit signature
+  form: Form;
+  handleInputChange: (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
 
-  const handleCancelEdit = () => {
-    setEditingId(null);
-    setUpdatedTitle("");
-    setUpdatedText("");
-    setUpdatedImage(null);
-  };
-
-  const handleUpdate = async (id) => {
-    try {
-      const formData = new FormData();
-      formData.append("title", updatedTitle);
-      formData.append("text", updatedText);
-      if (updatedImage) {
-        formData.append("image", updatedImage);
-      }
-
-      await axios.put(`http://localhost:3001/api/workItem/${id}`, formData);
-      fetchWorkItems();
-      setEditingId(null);
-      setUpdatedTitle("");
-      setUpdatedText("");
-      setUpdatedImage(null);
-    } catch (error) {
-      console.error("Error updating work item:", error);
-      setError("Error updating work item");
-    }
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3001/api/workItem/${id}`);
-      fetchWorkItems();
-    } catch (error) {
-      console.error("Error deleting work item:", error);
-      setError("Error deleting work item");
-    }
-  };
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+const Modal: React.FC<ModalProps> = ({
+  show,
+  handleClose,
+  handleSubmit,
+  form,
+  handleInputChange,
+  handleFileChange,
+}) => {
+  if (!show) return null;
 
   return (
-    <div className="container mx-auto mt-10">
-      <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
-      <table className="w-full border-collapse border border-gray-300">
-        {/* Table Header */}
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="border border-gray-300 px-4 py-2">Title</th>
-            <th className="border border-gray-300 px-4 py-2">Text</th>
-            <th className="border border-gray-300 px-4 py-2">Image</th>
-            <th className="border border-gray-300 px-4 py-2">Actions</th>
-          </tr>
-        </thead>
-        {/* Table Body */}
-        <tbody>
-          {workItems.map((item) => (
-            <tr key={item.id} className="hover:bg-gray-100">
-              <td className="border border-gray-300 px-4 py-2">
-                {editingId === item.id ? (
-                  <input
-                    type="text"
-                    value={updatedTitle}
-                    onChange={(e) => setUpdatedTitle(e.target.value)}
-                  />
-                ) : (
-                  item.title
-                )}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {editingId === item.id ? (
-                  <textarea
-                    value={updatedText}
-                    onChange={(e) => setUpdatedText(e.target.value)}
-                  />
-                ) : (
-                  item.text
-                )}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {item.image && (
-                  <img
-                    src={`data:image/png;base64,${item.image}`}
-                    alt={item.title}
-                    className="max-w-full h-auto"
-                  />
-                )}
-                {editingId === item.id && (
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setUpdatedImage(e.target.files[0])}
-                  />
-                )}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {editingId === item.id ? (
-                  <>
-                    <button
-                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
-                      onClick={() => handleUpdate(item.id)}
-                    >
-                      Save
-                    </button>
-                    <button
-                      className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-                      onClick={handleCancelEdit}
-                    >
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
-                      onClick={() => handleEdit(item.id, item.title, item.text)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                      onClick={() => handleDelete(item.id)}
-                    >
-                      Delete
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+        <h2 className="text-2xl font-semibold mb-4">
+          {form.id ? "Edit Section" : "Add Section"}
+        </h2>
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="title"
+            >
+              Title
+            </label>
+            <input
+              type="text"
+              name="title"
+              value={form.title}
+              onChange={handleInputChange}
+              placeholder="Title"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="text"
+            >
+              Text
+            </label>
+            <textarea
+              name="text"
+              value={form.text}
+              onChange={handleInputChange}
+              placeholder="Text"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            ></textarea>
+          </div>
+          <div className="mb-4">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="image"
+            >
+              Image
+            </label>
+            <input
+              type="file"
+              name="image"
+              onChange={handleFileChange}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="flex justify-end space-x-2">
+            <button
+              type="button"
+              onClick={handleClose}
+              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
 
-export default workItemPanel;
+const WorkItemPanel: React.FC = () => {
+  const [sections, setSections] = useState<Section[]>([]);
+  const [form, setForm] = useState<Form>({
+    id: null,
+    title: "",
+    text: "",
+  });
+  const [file, setFile] = useState<File | null>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    fetchSections();
+  }, []);
+
+  const fetchSections = () => {
+    fetch("http://localhost:3001/api/sections")
+      .then((response) => response.json())
+      .then((data) => setSections(data.data));
+  };
+
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("title", form.title);
+    formData.append("text", form.text);
+    if (file) {
+      formData.append("image", file);
+    }
+
+    const method = form.id ? "PUT" : "POST";
+    const url = form.id
+      ? `http://localhost:3001/api/sections/${form.id}`
+      : "http://localhost:3001/api/sections";
+
+    fetch(url, {
+      method,
+      body: formData,
+    }).then(() => {
+      fetchSections();
+      setForm({ id: null, title: "", text: "" });
+      setFile(null);
+      setShowModal(false);
+    });
+  };
+
+  const handleEdit = (section: Section) => {
+    setForm(section);
+    setShowModal(true);
+  };
+
+  const handleDelete = (id: number) => {
+    fetch(`http://localhost:3001/api/sections/${id}`, {
+      method: "DELETE",
+    }).then(() => fetchSections());
+  };
+
+  const handleAdd = () => {
+    setForm({ id: null, title: "", text: "" });
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  return (
+    <div className="container mx-auto p-4">
+      <button
+        onClick={handleAdd}
+        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-8"
+      >
+        Add Section
+      </button>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {sections.map((section) => (
+          <div key={section.id} className="bg-white shadow-lg rounded-lg p-6">
+            <h2 className="text-xl font-bold mb-2">{section.title}</h2>
+            <p className="mb-4 text-sm whitespace-pre-wrap">{section.text}</p>
+            {section.imageUrl && (
+              <img
+                src={`http://localhost:3001${section.imageUrl}`}
+                alt={section.title}
+                className="w-full h-64 object-cover mb-4 rounded-lg"
+              />
+            )}
+            <div className="flex justify-end space-x-2">
+              <button
+                onClick={() => handleEdit(section)}
+                className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDelete(section.id)}
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <Modal
+        show={showModal}
+        handleClose={handleCloseModal}
+        handleSubmit={handleFormSubmit}
+        form={form}
+        handleInputChange={handleInputChange}
+        handleFileChange={handleFileChange}
+      />
+    </div>
+  );
+};
+
+export default WorkItemPanel;

@@ -7,8 +7,15 @@ import RequestsTable from "@/components/RequestsTable";
 import Footer from "@/components/footer";
 import GuestPricingPanel from "@/components/GuestPricingPanel";
 
+interface ServiceProps {
+  title: string;
+  id: number;
+  details: string;
+  icon: any;
+}
+
 export default function Services() {
-  const [services, setServices] = useState([]);
+  const [services, setServices] = useState<ServiceProps[]>([]);
 
   useEffect(() => {
     axios
@@ -63,7 +70,13 @@ export default function Services() {
   );
 }
 
-const ServiceCard = ({ icon, title, details }) => {
+interface ServiceCardProps {
+  icon: any;
+  title: string;
+  details: string;
+}
+
+const ServiceCard: React.FC<ServiceCardProps> = ({ icon, title, details }) => {
   return (
     <div className="w-full px-4 md:w-1/2 lg:w-1/3 mb-8">
       <div className="bg-white p-10 shadow-md hover:shadow-lg dark:bg-dark-2 md:px-7 xl:px-10 rounded-[20px]">

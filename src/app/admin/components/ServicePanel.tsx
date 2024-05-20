@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import axios from "axios";
 
-const Services = () => {
-  const [services, setServices] = useState([]);
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [serviceToEdit, setServiceToEdit] = useState({});
+interface Service {
+  id: number;
+  title: string;
+  details: string;
+  icon: string;
+}
+
+const Services: React.FC = () => {
+  const [services, setServices] = useState<Service[]>([]);
+  const [showAddModal, setShowAddModal] = useState<boolean>(false);
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [serviceToEdit, setServiceToEdit] = useState<Service | null>(null);
   const [formData, setFormData] = useState({
     title: "",
     details: "",
@@ -14,7 +21,7 @@ const Services = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/services")
+      .get<Service[]>("http://localhost:3001/api/services")
       .then((res) => {
         setServices(res.data);
       })
@@ -23,26 +30,27 @@ const Services = () => {
       });
   }, []);
 
-  const handleDeleteService = (id) => {
+  const handleDeleteService = (id: number): void => {
     axios
       .delete(`http://localhost:3001/api/services/${id}`)
       .then((res) => {
         console.log(res.data);
-        // Refresh services after deletion
-        setServices(services.filter((service) => service.id !== id));
+        setServices((prevServices) =>
+          prevServices.filter((service) => service.id !== id)
+        );
       })
       .catch((err) => {
         console.error("Error deleting service:", err);
       });
   };
 
-  const handleEditService = (service) => {
+  const handleEditService = (service: Service): void => {
     setServiceToEdit(service);
     setFormData(service);
     setShowEditModal(true);
   };
 
-  const handleAddService = () => {
+  const handleAddService = (): void => {
     setFormData({
       title: "",
       details: "",
@@ -51,16 +59,14 @@ const Services = () => {
     setShowAddModal(true);
   };
 
-  const handleSaveService = () => {
-    if (showEditModal) {
-      // Update service
+  const handleSaveService = (): void => {
+    if (showEditModal && serviceToEdit) {
       axios
         .put(`http://localhost:3001/api/services/${serviceToEdit.id}`, formData)
         .then((res) => {
           console.log(res.data);
-          // Refresh services after update
           axios
-            .get("http://localhost:3001/api/services")
+            .get<Service[]>("http://localhost:3001/api/services")
             .then((res) => {
               setServices(res.data);
               setShowEditModal(false);
@@ -73,14 +79,12 @@ const Services = () => {
           console.error("Error updating service:", err);
         });
     } else {
-      // Add service
       axios
         .post("http://localhost:3001/api/services", formData)
         .then((res) => {
           console.log(res.data);
-          // Refresh services after addition
           axios
-            .get("http://localhost:3001/api/services")
+            .get<Service[]>("http://localhost:3001/api/services")
             .then((res) => {
               setServices(res.data);
               setShowAddModal(false);
@@ -95,7 +99,9 @@ const Services = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -135,13 +141,13 @@ const Services = () => {
                     onClick={() => handleEditService(service)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
                   >
-                    Засах
+                    Edit
                   </button>
                   <button
                     onClick={() => handleDeleteService(service.id)}
                     className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                   >
-                    Устгах
+                    Delete
                   </button>
                 </td>
               </tr>
@@ -150,11 +156,10 @@ const Services = () => {
         </table>
       </div>
 
-      {/* Add Service Modal */}
       {showAddModal && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-8 rounded shadow-lg">
-            <h2 className="text-sm font-bold mb-4">Үйлчилгээ нэмэх</h2>
+            <h2 className="text-sm font-bold mb-4">Add Service</h2>
             <input
               type="text"
               name="title"
@@ -183,19 +188,18 @@ const Services = () => {
               onClick={() => setShowAddModal(false)}
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
             >
-              Цуцлах
+              Cancel
             </button>
             <button
               onClick={handleSaveService}
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
             >
-              Нэмэх
+              Save
             </button>
           </div>
         </div>
       )}
 
-      {/* Edit Service Modal */}
       {showEditModal && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-8 rounded shadow-lg">
@@ -205,7 +209,8 @@ const Services = () => {
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="border border-gray-300 px-4 py-2 mb-2 w-full"
+              className="border border
+              gray-300 px-4 py-2 mb-2 w-full"
               placeholder="Title"
             />
             <input
@@ -228,13 +233,13 @@ const Services = () => {
               onClick={() => setShowEditModal(false)}
               className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
             >
-              Цуцлах
+              Cancel
             </button>
             <button
               onClick={handleSaveService}
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
             >
-              Хадгалах
+              Save
             </button>
           </div>
         </div>
