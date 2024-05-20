@@ -1,11 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import axios from "axios";
 
-const PersonRequests = () => {
-  const [requests, setRequests] = useState([]);
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [requestToEdit, setRequestToEdit] = useState({});
+interface Request {
+  id: number;
+  title: string;
+  number: string;
+}
+
+const PersonRequests: React.FC = () => {
+  const [requests, setRequests] = useState<Request[]>([]);
+  const [showAddModal, setShowAddModal] = useState<boolean>(false);
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [requestToEdit, setRequestToEdit] = useState<Request | null>(null);
   const [formData, setFormData] = useState({
     title: "",
     number: "",
@@ -13,7 +19,7 @@ const PersonRequests = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/personReq")
+      .get<Request[]>("http://localhost:3001/api/personReq")
       .then((res) => {
         setRequests(res.data);
       })
@@ -22,26 +28,27 @@ const PersonRequests = () => {
       });
   }, []);
 
-  const handleDeleteRequest = (id) => {
+  const handleDeleteRequest = (id: number): void => {
     axios
       .delete(`http://localhost:3001/api/personReq/${id}`)
       .then((res) => {
         console.log(res.data);
-        // Refresh requests after deletion
-        setRequests(requests.filter((request) => request.id !== id));
+        setRequests((prevRequests) =>
+          prevRequests.filter((req) => req.id !== id)
+        );
       })
       .catch((err) => {
         console.error("Error deleting request:", err);
       });
   };
 
-  const handleEditRequest = (request) => {
+  const handleEditRequest = (request: Request): void => {
     setRequestToEdit(request);
     setFormData(request);
     setShowEditModal(true);
   };
 
-  const handleAddRequest = () => {
+  const handleAddRequest = (): void => {
     setFormData({
       title: "",
       number: "",
@@ -49,9 +56,8 @@ const PersonRequests = () => {
     setShowAddModal(true);
   };
 
-  const handleSaveRequest = () => {
-    if (showEditModal) {
-      // Update request
+  const handleSaveRequest = (): void => {
+    if (showEditModal && requestToEdit) {
       axios
         .put(
           `http://localhost:3001/api/personReq/${requestToEdit.id}`,
@@ -59,9 +65,8 @@ const PersonRequests = () => {
         )
         .then((res) => {
           console.log(res.data);
-          // Refresh requests after update
           axios
-            .get("http://localhost:3001/api/personReq")
+            .get<Request[]>("http://localhost:3001/api/personReq")
             .then((res) => {
               setRequests(res.data);
               setShowEditModal(false);
@@ -74,14 +79,12 @@ const PersonRequests = () => {
           console.error("Error updating request:", err);
         });
     } else {
-      // Add request
       axios
         .post("http://localhost:3001/api/personReq", formData)
         .then((res) => {
           console.log(res.data);
-          // Refresh requests after addition
           axios
-            .get("http://localhost:3001/api/personReq")
+            .get<Request[]>("http://localhost:3001/api/personReq")
             .then((res) => {
               setRequests(res.data);
               setShowAddModal(false);
@@ -96,7 +99,7 @@ const PersonRequests = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
