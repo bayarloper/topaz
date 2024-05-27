@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const features = [
   {
-    title: "Qualified Doctors",
+    title: "Мэргэжлийн эмч нар",
     description:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been",
     imgSrc: "/doctor.svg",
@@ -11,15 +11,15 @@ const features = [
     bgColor: "bg-green-custom",
   },
   {
-    title: "24/7 Service",
+    title: "24/7 Үйлчилгээ",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when",
-    imgSrc: "/doctor.svg",
+    imgSrc: "/service.svg",
     imgAlt: "Service",
     bgColor: "bg-blue-custom",
   },
   {
-    title: "We Care with Love",
+    title: "Эерэг хандлага",
     description:
       "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical",
     imgSrc: "/care.svg",
@@ -46,7 +46,7 @@ const Features = () => {
                     className="rounded-lg object-contain object-left"
                   />
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-white">
+                <h3 className="text-l font-semibold mb-2 text-white">
                   {feature.title}
                 </h3>
                 <p className="text-white text-sm">{feature.description}</p>
