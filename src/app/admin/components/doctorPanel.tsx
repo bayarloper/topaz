@@ -46,11 +46,11 @@ const DoctorForm: React.FC<DoctorFormProps> = ({
     try {
       if (doctor) {
         await axios.put(
-          `http://localhost:3001/api/doctors/${doctor.id}`,
+          `https://topaz-six.vercel.app//api/doctors/${doctor.id}`,
           formData
         );
       } else {
-        await axios.post("http://localhost:3001/api/doctors", formData);
+        await axios.post("https://topaz-six.vercel.app//api/doctors", formData);
       }
 
       setForm({ name: "", title: "", image: null });
@@ -141,7 +141,9 @@ const DoctorPanel: React.FC = () => {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/api/doctors");
+        const response = await axios.get(
+          "https://topaz-six.vercel.app//api/doctors"
+        );
         setDoctors(response.data.doctors);
       } catch (error) {
         console.error("Error fetching doctors:", error);
@@ -167,7 +169,7 @@ const DoctorPanel: React.FC = () => {
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:3001/api/doctors/${id}`);
+      await axios.delete(`https://topaz-six.vercel.app//api/doctors/${id}`);
       setDoctors((prevDoctors) =>
         prevDoctors.filter((doctor) => doctor.id !== id)
       );
@@ -192,7 +194,7 @@ const DoctorPanel: React.FC = () => {
             const fetchDoctors = async () => {
               try {
                 const response = await axios.get(
-                  "http://localhost:3001/api/doctors"
+                  "https://topaz-six.vercel.app//api/doctors"
                 );
                 setDoctors(response.data.doctors);
               } catch (error) {
@@ -214,7 +216,7 @@ const DoctorPanel: React.FC = () => {
             <span className="text-gray-600">({doctor.title})</span>
             {doctor.image && (
               <img
-                src={`http://localhost:3001${doctor.image}`}
+                src={`https://topaz-six.vercel.app/${doctor.image}`}
                 alt={doctor.name}
                 className="w-24 h-24 rounded-full mt-4"
               />

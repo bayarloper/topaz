@@ -15,7 +15,7 @@ const WorkItem: React.FC = () => {
   const [sections, setSections] = useState<SectionProps[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/sections")
+    fetch("https://topaz-six.vercel.app//api/sections")
       .then((response) => response.json())
       .then((data) => setSections(data.data));
   }, []);
@@ -41,7 +41,7 @@ const WorkItem: React.FC = () => {
               key={section.id}
               title={section.title}
               text={section.text}
-              imageUrl={`http://localhost:3001${section.imageUrl}`}
+              imageUrl={`https://topaz-six.vercel.app/${section.imageUrl}`}
             />
           ))}
         </div>

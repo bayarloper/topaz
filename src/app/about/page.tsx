@@ -27,7 +27,7 @@ const About = () => {
 
   const fetchAboutData = async () => {
     try {
-      const response = await fetch("http://localhost:3001/api/about", {
+      const response = await fetch("https://topaz-six.vercel.app//api/about", {
         method: "GET",
       });
       console.log(response);
@@ -43,9 +43,12 @@ const About = () => {
 
   const fetchBlogPosts = async () => {
     try {
-      const response = await fetch("http://localhost:3001/api/blogpost", {
-        method: "GET",
-      });
+      const response = await fetch(
+        "https://topaz-six.vercel.app//api/blogpost",
+        {
+          method: "GET",
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch blog posts");
       }

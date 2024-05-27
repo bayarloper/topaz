@@ -19,7 +19,7 @@ const BlogPanel = () => {
   const fetchBlogPosts = async () => {
     try {
       const response = await axios.get<BlogPost[]>(
-        "http://localhost:3001/api/blogpost"
+        "https://topaz-six.vercel.app//api/blogpost"
       );
       setBlogPosts(response.data);
     } catch (error) {
@@ -36,7 +36,9 @@ const BlogPanel = () => {
     }
 
     try {
-      await axios.delete(`http://localhost:3001/api/blogpost/${postId}`);
+      await axios.delete(
+        `https://topaz-six.vercel.app//api/blogpost/${postId}`
+      );
       // After successful deletion, fetch the updated list of blog posts
       fetchBlogPosts();
     } catch (error) {

@@ -26,7 +26,7 @@ const AdminPricingPanel = () => {
 
   const fetchPricingPlans = () => {
     axios
-      .get<PricingPlan[]>("http://localhost:3001/api/pricing")
+      .get<PricingPlan[]>("https://topaz-six.vercel.app//api/pricing")
       .then((response) => {
         setPricingPlans(response.data);
       })
@@ -37,7 +37,7 @@ const AdminPricingPanel = () => {
 
   const handleDeletePlan = (id: string) => {
     axios
-      .delete(`http://localhost:3001/api/pricing/${id}`)
+      .delete(`https://topaz-six.vercel.app//api/pricing/${id}`)
       .then(() => {
         fetchPricingPlans();
       })
@@ -65,7 +65,10 @@ const AdminPricingPanel = () => {
   const handleSavePlan = () => {
     if (showEditModal && planToEdit) {
       axios
-        .put(`http://localhost:3001/api/pricing/${planToEdit.id}`, formData)
+        .put(
+          `https://topaz-six.vercel.app//api/pricing/${planToEdit.id}`,
+          formData
+        )
         .then(() => {
           fetchPricingPlans();
           setShowEditModal(false);
@@ -75,7 +78,7 @@ const AdminPricingPanel = () => {
         });
     } else {
       axios
-        .post("http://localhost:3001/api/pricing", formData)
+        .post("https://topaz-six.vercel.app//api/pricing", formData)
         .then(() => {
           fetchPricingPlans();
           setShowAddModal(false);

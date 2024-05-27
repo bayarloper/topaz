@@ -19,7 +19,7 @@ const AboutPanel: React.FC = () => {
 
   const fetchAboutData = async () => {
     try {
-      const response = await fetch("http://localhost:3001/api/about");
+      const response = await fetch("https://topaz-six.vercel.app//api/about");
       if (response.ok) {
         const data: AboutItem[] = await response.json();
         setAboutData(data);
@@ -43,7 +43,7 @@ const AboutPanel: React.FC = () => {
   const handleSubmit = async (id: number, newDescription: string) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/api/about/update/${id}`,
+        `https://topaz-six.vercel.app//api/about/update/${id}`,
         {
           method: "PUT",
           headers: {
