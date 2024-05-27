@@ -124,7 +124,7 @@ const WorkItemPanel: React.FC = () => {
   }, []);
 
   const fetchSections = () => {
-    fetch("http://localhost:3001/api/sections")
+    fetch("https://topaz-backend.vercel.app/api/sections")
       .then((response) => response.json())
       .then((data) => setSections(data.data));
   };
@@ -153,8 +153,8 @@ const WorkItemPanel: React.FC = () => {
 
     const method = form.id ? "PUT" : "POST";
     const url = form.id
-      ? `http://localhost:3001/api/sections/${form.id}`
-      : "http://localhost:3001/api/sections";
+      ? `https://topaz-backend.vercel.app/api/sections/${form.id}`
+      : "https://topaz-backend.vercel.app/api/sections";
 
     fetch(url, {
       method,
@@ -173,7 +173,7 @@ const WorkItemPanel: React.FC = () => {
   };
 
   const handleDelete = (id: number) => {
-    fetch(`http://localhost:3001/api/sections/${id}`, {
+    fetch(`https://topaz-backend.vercel.app/api/sections/${id}`, {
       method: "DELETE",
     }).then(() => fetchSections());
   };

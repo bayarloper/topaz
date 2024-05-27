@@ -12,7 +12,9 @@ export default function DoctorPanel() {
 
   const fetchDoctors = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/doctors");
+      const response = await axios.get(
+        "https://topaz-backend.vercel.app/api/doctors"
+      );
       setDoctors(response.data.doctors);
     } catch (error) {
       console.error("Error fetching doctors:", error);
@@ -35,7 +37,7 @@ export default function DoctorPanel() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/api/doctors/${id}`);
+      await axios.delete(`https://topaz-backend.vercel.app/api/doctors/${id}`);
       fetchDoctors();
     } catch (error) {
       console.error("Error deleting doctor:", error);
@@ -122,11 +124,14 @@ function DoctorForm({ doctor, onClose, onSuccess }) {
     try {
       if (doctor) {
         await axios.put(
-          `http://localhost:3001/api/doctors/${doctor.id}`,
+          `https://topaz-backend.vercel.app/api/doctors/${doctor.id}`,
           formData
         );
       } else {
-        await axios.post("http://localhost:3001/api/doctors", formData);
+        await axios.post(
+          "https://topaz-backend.vercel.app/api/doctors",
+          formData
+        );
       }
 
       setForm({ name: "", title: "", image: null });

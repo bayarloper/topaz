@@ -19,7 +19,7 @@ export default function Services() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/api/services")
+      .get("https://topaz-backend.vercel.app/api/services")
       .then((res) => {
         setServices(res.data);
       })
