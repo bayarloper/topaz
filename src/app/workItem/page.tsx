@@ -41,7 +41,7 @@ const WorkItem: React.FC = () => {
               key={section.id}
               title={section.title}
               text={section.text}
-              imageUrl={`http://localhost:3001${section.imageUrl}`}
+              imageUrl={`https://topaz-backend.vercel.app${section.imageUrl}`}
             />
           ))}
         </div>

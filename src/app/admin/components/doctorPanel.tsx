@@ -219,7 +219,7 @@ const DoctorPanel: React.FC = () => {
             <span className="text-gray-600">({doctor.title})</span>
             {doctor.image && (
               <img
-                src={`http://localhost:3001${doctor.image}`}
+                src={`https://topaz-backend.vercel.app${doctor.image}`}
                 alt={doctor.name}
                 className="w-24 h-24 rounded-full mt-4"
               />

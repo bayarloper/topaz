@@ -203,7 +203,7 @@ const WorkItemPanel: React.FC = () => {
             <p className="mb-4 text-sm whitespace-pre-wrap">{section.text}</p>
             {section.imageUrl && (
               <img
-                src={`http://localhost:3001${section.imageUrl}`}
+                src={`https://topaz-backend.vercel.app${section.imageUrl}`}
                 alt={section.title}
                 className="w-full h-64 object-cover mb-4 rounded-lg"
               />
