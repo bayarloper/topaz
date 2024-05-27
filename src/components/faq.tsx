@@ -16,7 +16,7 @@ const FAQComponent: React.FC = () => {
 
   const fetchFAQs = () => {
     axios
-      .get("https://topaz-six.vercel.app//api/faqs") // Adjust the API endpoint based on your backend setup
+      .get("https://topaz-backend.vercel.app/api/faqs") // Adjust the API endpoint based on your backend setup
       .then((res) => {
         setFaqs(res.data);
       })

@@ -13,7 +13,7 @@ const RequestsTable: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get("https://topaz-six.vercel.app//api/personReq")
+      .get("https://topaz-backend.vercel.app/api/personReq")
       .then((res) => {
         setRequests(res.data);
       })
