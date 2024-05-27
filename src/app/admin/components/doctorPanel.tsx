@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import axios from "axios";
 
 export default function DoctorPanel() {
@@ -7,19 +8,19 @@ export default function DoctorPanel() {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const response = await axios.get(
+          "https://topaz-backend.vercel.app/api/doctors"
+        );
+        setDoctors(response.data.doctors);
+      } catch (error) {
+        console.error("Error fetching doctors:", error);
+      }
+    };
+
     fetchDoctors();
   }, []);
-
-  const fetchDoctors = async () => {
-    try {
-      const response = await axios.get(
-        "https://topaz-backend.vercel.app/api/doctors"
-      );
-      setDoctors(response.data.doctors);
-    } catch (error) {
-      console.error("Error fetching doctors:", error);
-    }
-  };
 
   const handleEdit = (doctor) => {
     setEditingDoctor(doctor);
@@ -38,7 +39,9 @@ export default function DoctorPanel() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`https://topaz-backend.vercel.app/api/doctors/${id}`);
-      fetchDoctors();
+      setDoctors((prevDoctors) =>
+        prevDoctors.filter((doctor) => doctor.id !== id)
+      );
     } catch (error) {
       console.error("Error deleting doctor:", error);
     }
@@ -56,7 +59,19 @@ export default function DoctorPanel() {
         <DoctorForm
           doctor={editingDoctor}
           onClose={handleClosePopup}
-          onSuccess={fetchDoctors}
+          onSuccess={() => {
+            const fetchDoctors = async () => {
+              try {
+                const response = await axios.get(
+                  "https://topaz-backend.vercel.app/api/doctors"
+                );
+                setDoctors(response.data.doctors);
+              } catch (error) {
+                console.error("Error fetching doctors:", error);
+              }
+            };
+            fetchDoctors();
+          }}
         />
       )}
       <h2 className="text-l font-bold mb-4 text-left mt-4">Эмч нар</h2>
@@ -213,3 +228,25 @@ function DoctorForm({ doctor, onClose, onSuccess }) {
     </div>
   );
 }
+
+DoctorForm.propTypes = {
+  doctor: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    title: PropTypes.string,
+    image: PropTypes.string,
+  }),
+  onClose: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired,
+};
+
+DoctorPanel.propTypes = {
+  doctors: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      image: PropTypes.string,
+    })
+  ),
+};
