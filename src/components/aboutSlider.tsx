@@ -16,9 +16,9 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
   };
 
   return (
-    <div className="custom-slider-container mt-5 mb-5 rounded-lg">
+    <div className="relative w-full mx-auto mt-5 mb-5 rounded-lg overflow-hidden shadow-lg">
       <div
-        className="custom-slider"
+        className="flex transition-transform duration-500"
         style={{ transform: `translateX(-${slideIndex * 100}%)` }}
       >
         {images.map((image: string, index: number) => (
@@ -26,18 +26,18 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
             key={index}
             src={image}
             alt={`Image ${index + 1}`}
-            className="slide"
+            className="w-full flex-shrink-0"
           />
         ))}
       </div>
       <button
-        className="custom-button custom-prev"
+        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 bg-opacity-50 hover:bg-opacity-75 focus:outline-none"
         onClick={() => moveSlide(-1)}
       >
         &#10094;
       </button>
       <button
-        className="custom-button custom-next"
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white rounded-full p-2 bg-opacity-50 hover:bg-opacity-75 focus:outline-none"
         onClick={() => moveSlide(1)}
       >
         &#10095;
