@@ -46,14 +46,11 @@ const DoctorForm: React.FC<DoctorFormProps> = ({
     try {
       if (doctor) {
         await axios.put(
-          `https://topaz-backend.vercel.app/api/doctors/${doctor.id}`,
+          `http://localhost:3001/api/doctors/${doctor.id}`,
           formData
         );
       } else {
-        await axios.post(
-          "https://topaz-backend.vercel.app/api/doctors",
-          formData
-        );
+        await axios.post("http://localhost:3001/api/doctors", formData);
       }
 
       setForm({ name: "", title: "", image: null });
@@ -144,9 +141,7 @@ const DoctorPanel: React.FC = () => {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await axios.get(
-          "https://topaz-backend.vercel.app/api/doctors"
-        );
+        const response = await axios.get("http://localhost:3001/api/doctors");
         setDoctors(response.data.doctors);
       } catch (error) {
         console.error("Error fetching doctors:", error);
@@ -172,7 +167,7 @@ const DoctorPanel: React.FC = () => {
 
   const handleDelete = async (id: number) => {
     try {
-      await axios.delete(`https://topaz-backend.vercel.app/api/doctors/${id}`);
+      await axios.delete(`http://localhost:3001/api/doctors/${id}`);
       setDoctors((prevDoctors) =>
         prevDoctors.filter((doctor) => doctor.id !== id)
       );
@@ -197,7 +192,7 @@ const DoctorPanel: React.FC = () => {
             const fetchDoctors = async () => {
               try {
                 const response = await axios.get(
-                  "https://topaz-backend.vercel.app/api/doctors"
+                  "http://localhost:3001/api/doctors"
                 );
                 setDoctors(response.data.doctors);
               } catch (error) {
@@ -219,7 +214,7 @@ const DoctorPanel: React.FC = () => {
             <span className="text-gray-600">({doctor.title})</span>
             {doctor.image && (
               <img
-                src={`https://topaz-backend.vercel.app${doctor.image}`}
+                src={`http://localhost:3001${doctor.image}`}
                 alt={doctor.name}
                 className="w-24 h-24 rounded-full mt-4"
               />
