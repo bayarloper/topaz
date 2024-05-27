@@ -27,7 +27,7 @@ const About = () => {
 
   const fetchAboutData = async () => {
     try {
-      const response = await fetch("http://13.229.91.93:3001/api/about", {
+      const response = await fetch("http://13.229.95.135:3001/api/about", {
         method: "GET",
       });
       console.log(response);
@@ -43,7 +43,7 @@ const About = () => {
 
   const fetchBlogPosts = async () => {
     try {
-      const response = await fetch("http://13.229.91.93:3001/api/blogpost", {
+      const response = await fetch("http://13.229.95.135:3001/api/blogpost", {
         method: "GET",
       });
       if (!response.ok) {

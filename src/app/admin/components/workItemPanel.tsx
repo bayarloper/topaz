@@ -124,7 +124,7 @@ const WorkItemPanel: React.FC = () => {
   }, []);
 
   const fetchSections = () => {
-    fetch("http://13.229.91.93:3001/api/sections")
+    fetch("http://13.229.95.135:3001/api/sections")
       .then((response) => response.json())
       .then((data) => setSections(data.data));
   };
@@ -153,8 +153,8 @@ const WorkItemPanel: React.FC = () => {
 
     const method = form.id ? "PUT" : "POST";
     const url = form.id
-      ? `http://13.229.91.93:3001/api/sections/${form.id}`
-      : "http://13.229.91.93:3001/api/sections";
+      ? `http://13.229.95.135:3001/api/sections/${form.id}`
+      : "http://13.229.95.135:3001/api/sections";
 
     fetch(url, {
       method,
@@ -173,7 +173,7 @@ const WorkItemPanel: React.FC = () => {
   };
 
   const handleDelete = (id: number) => {
-    fetch(`http://13.229.91.93:3001/api/sections/${id}`, {
+    fetch(`http://13.229.95.135:3001/api/sections/${id}`, {
       method: "DELETE",
     }).then(() => fetchSections());
   };
@@ -203,7 +203,7 @@ const WorkItemPanel: React.FC = () => {
             <p className="mb-4 text-sm whitespace-pre-wrap">{section.text}</p>
             {section.imageUrl && (
               <img
-                src={`http://13.229.91.93:3001${section.imageUrl}`}
+                src={`http://13.229.95.135:3001${section.imageUrl}`}
                 alt={section.title}
                 className="w-full h-64 object-cover mb-4 rounded-lg"
               />

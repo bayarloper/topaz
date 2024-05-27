@@ -13,7 +13,7 @@ const RequestsTable: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get("http://13.229.91.93:3001/api/personReq")
+      .get("http://13.229.95.135:3001/api/personReq")
       .then((res) => {
         setRequests(res.data);
       })

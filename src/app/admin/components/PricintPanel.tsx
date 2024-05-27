@@ -26,7 +26,7 @@ const AdminPricingPanel = () => {
 
   const fetchPricingPlans = () => {
     axios
-      .get<PricingPlan[]>("http://13.229.91.93:3001/api/pricing")
+      .get<PricingPlan[]>("http://13.229.95.135:3001/api/pricing")
       .then((response) => {
         setPricingPlans(response.data);
       })
@@ -37,7 +37,7 @@ const AdminPricingPanel = () => {
 
   const handleDeletePlan = (id: string) => {
     axios
-      .delete(`http://13.229.91.93:3001/api/pricing/${id}`)
+      .delete(`http://13.229.95.135:3001/api/pricing/${id}`)
       .then(() => {
         fetchPricingPlans();
       })
@@ -65,7 +65,7 @@ const AdminPricingPanel = () => {
   const handleSavePlan = () => {
     if (showEditModal && planToEdit) {
       axios
-        .put(`http://13.229.91.93:3001/api/pricing/${planToEdit.id}`, formData)
+        .put(`http://13.229.95.135:3001/api/pricing/${planToEdit.id}`, formData)
         .then(() => {
           fetchPricingPlans();
           setShowEditModal(false);
@@ -75,7 +75,7 @@ const AdminPricingPanel = () => {
         });
     } else {
       axios
-        .post("http://13.229.91.93:3001/api/pricing", formData)
+        .post("http://13.229.95.135:3001/api/pricing", formData)
         .then(() => {
           fetchPricingPlans();
           setShowAddModal(false);

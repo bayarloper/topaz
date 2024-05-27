@@ -18,7 +18,7 @@ const GuestPricingPanel = () => {
   const fetchPricingPlans = async () => {
     try {
       const response = await axios.get<PricingPlan[]>(
-        "http://13.229.91.93:3001/api/pricing"
+        "http://13.229.95.135:3001/api/pricing"
       );
       setPricingPlans(response.data);
     } catch (error) {

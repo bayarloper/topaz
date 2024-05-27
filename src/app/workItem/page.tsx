@@ -15,7 +15,7 @@ const WorkItem: React.FC = () => {
   const [sections, setSections] = useState<SectionProps[]>([]);
 
   useEffect(() => {
-    fetch("http://13.229.91.93:3001/api/sections")
+    fetch("http://13.229.95.135:3001/api/sections")
       .then((response) => response.json())
       .then((data) => setSections(data.data));
   }, []);
@@ -41,7 +41,7 @@ const WorkItem: React.FC = () => {
               key={section.id}
               title={section.title}
               text={section.text}
-              imageUrl={`http://13.229.91.93:3001${section.imageUrl}`}
+              imageUrl={`http://13.229.95.135:3001${section.imageUrl}`}
             />
           ))}
         </div>

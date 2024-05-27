@@ -19,7 +19,7 @@ export default function Services() {
 
   useEffect(() => {
     axios
-      .get("http://13.229.91.93:3001/api/services")
+      .get("http://13.229.95.135:3001/api/services")
       .then((res) => {
         setServices(res.data);
       })
