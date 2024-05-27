@@ -40,9 +40,6 @@ export default function Home() {
                   />
                 </span>
               </h2>
-              <p className="m-0 max-w-full text-sm opacity-75">
-                {card.description}
-              </p>
             </a>
           ))}
         </div>
@@ -59,31 +56,23 @@ const cards = [
     title: "Бидний тухай",
     imgSrc: "/hospital.png",
     imgAlt: "Hospital",
-    description:
-      "The placeholder text, beginning with the line “Lorem ipsum dolor sit amet, consectetur adipiscing elit”, looks like Latin because in its youth, centuries ago, it was Latin.",
   },
   {
     href: "/uilchilgee",
     title: "Үйлчилгээ",
     imgSrc: "/support.png",
     imgAlt: "Support",
-    description:
-      "The placeholder text, beginning with the line “Lorem ipsum dolor sit amet, consectetur adipiscing elit”, looks like Latin because in its youth, centuries ago, it was Latin.",
   },
   {
     href: "/workItem",
     title: "Бүтэц",
     imgSrc: "/hospital.png",
     imgAlt: "Hospital",
-    description:
-      "The placeholder text, beginning with the line “Lorem ipsum dolor sit amet, consectetur adipiscing elit”, looks like Latin because in its youth, centuries ago, it was Latin.",
   },
   {
     href: "/vision",
     title: "Ил тод байдал",
     imgSrc: "/targeting.png",
     imgAlt: "Targeting",
-    description:
-      "The placeholder text, beginning with the line “Lorem ipsum dolor sit amet, consectetur adipiscing elit”, looks like Latin because in its youth, centuries ago, it was Latin.",
   },
 ];
