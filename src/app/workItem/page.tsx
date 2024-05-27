@@ -24,17 +24,26 @@ const WorkItem: React.FC = () => {
     <div>
       <Navbar />
       <div className="container mx-auto py-8">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="container mx-auto p-4">
-            {sections.map((section) => (
-              <Section
-                key={section.id}
-                title={section.title}
-                text={section.text}
-                imageUrl={`http://localhost:3001${section.imageUrl}`} // Update image URL
-              />
-            ))}
+        <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-1 gap-4">
+          <div className="w-full px-4">
+            <div className="mx-auto mb-12 max-w-[510px] text-center lg:mb-20">
+              <h2 className="mb-3 mt-3 text-3xl font-bold leading-[1.2] text-dark dark:text-white sm:text-4xl md:text-[40px]">
+                Бүтэц
+              </h2>
+              <p className="text-base text-body-color dark:text-dark-6">
+                There are many variations of passages of Lorem Ipsum available
+                but the majority have suffered alteration in some form.
+              </p>
+            </div>
           </div>
+          {sections.map((section) => (
+            <Section
+              key={section.id}
+              title={section.title}
+              text={section.text}
+              imageUrl={`http://localhost:3001${section.imageUrl}`}
+            />
+          ))}
         </div>
       </div>
       <Footer />
@@ -54,10 +63,14 @@ const Section: React.FC<SectionComponentProps> = ({
   imageUrl,
 }) => {
   return (
-    <div className="mb-8">
-      <h2 className="text-2xl font-bold mb-4">{title}</h2>
-      <p className="mb-4">{text}</p>
-      <img src={imageUrl} alt={title} className="w-full h-auto" />
+    <div className="flex flex-col md:flex-row">
+      <div className="md:w-1/2 p-4">
+        <img src={imageUrl} alt={title} className="w-full h-auto" />
+      </div>
+      <div className="md:w-1/2 p-4">
+        <h2 className="text-2xl font-bold mb-4">{title}</h2>
+        <p className="mb-4">{text}</p>
+      </div>
     </div>
   );
 };

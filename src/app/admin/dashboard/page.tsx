@@ -8,6 +8,7 @@ import FAQs from "../components/FaqPanel";
 import PersonRequests from "../components/ItemPanel";
 import AdminPricingPanel from "../components/PricintPanel";
 import WorkItemDB from "../components/workItemPanel";
+import DoctorPanel from "../components/doctorPanel";
 
 const DashboardPage = () => {
   const [activeTab, setActiveTab] = useState("about"); // Default active tab
@@ -17,7 +18,7 @@ const DashboardPage = () => {
     { id: "blogs", label: "Нийтлэл" },
     { id: "services", label: "Үйлчилгээ" },
     { id: "workItem", label: "Бүтэц" },
-    { id: "team", label: "Эмч нар" },
+    { id: "vision", label: "Ил тод байдал" },
   ];
 
   const handleTabClick = (tabId: any) => {
@@ -92,11 +93,11 @@ const DashboardPage = () => {
             <WorkItemDB></WorkItemDB>
           </div>
         )}
-        {activeTab === "team" && (
+        {activeTab === "vision" && (
           <div>
             {/* Team members component */}
             <h2 className="text-xl font-bold mb-4">Team Member Management</h2>
-            {/* Add your team member management component here */}
+            <DoctorPanel></DoctorPanel>
           </div>
         )}
       </div>
