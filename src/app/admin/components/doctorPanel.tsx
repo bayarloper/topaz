@@ -1,133 +1,40 @@
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
 
-export default function DoctorPanel() {
-  const [doctors, setDoctors] = useState([]);
-  const [editingDoctor, setEditingDoctor] = useState(null);
-  const [showPopup, setShowPopup] = useState(false);
-
-  useEffect(() => {
-    const fetchDoctors = async () => {
-      try {
-        const response = await axios.get(
-          "https://topaz-backend.vercel.app/api/doctors"
-        );
-        setDoctors(response.data.doctors);
-      } catch (error) {
-        console.error("Error fetching doctors:", error);
-      }
-    };
-
-    fetchDoctors();
-  }, []);
-
-  const handleEdit = (doctor) => {
-    setEditingDoctor(doctor);
-    setShowPopup(true);
-  };
-
-  const handleAdd = () => {
-    setEditingDoctor(null);
-    setShowPopup(true);
-  };
-
-  const handleClosePopup = () => {
-    setShowPopup(false);
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`https://topaz-backend.vercel.app/api/doctors/${id}`);
-      setDoctors((prevDoctors) =>
-        prevDoctors.filter((doctor) => doctor.id !== id)
-      );
-    } catch (error) {
-      console.error("Error deleting doctor:", error);
-    }
-  };
-
-  return (
-    <div>
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-        onClick={handleAdd}
-      >
-        Add Doctor
-      </button>
-      {showPopup && (
-        <DoctorForm
-          doctor={editingDoctor}
-          onClose={handleClosePopup}
-          onSuccess={() => {
-            const fetchDoctors = async () => {
-              try {
-                const response = await axios.get(
-                  "https://topaz-backend.vercel.app/api/doctors"
-                );
-                setDoctors(response.data.doctors);
-              } catch (error) {
-                console.error("Error fetching doctors:", error);
-              }
-            };
-            fetchDoctors();
-          }}
-        />
-      )}
-      <h2 className="text-l font-bold mb-4 text-left mt-4">Эмч нар</h2>
-      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {doctors.map((doctor) => (
-          <li
-            key={doctor.id}
-            className="bg-white p-4 rounded shadow-md flex flex-col items-center"
-          >
-            <strong className="text-lg">{doctor.name}</strong>
-            <span className="text-gray-600">({doctor.title})</span>
-            {doctor.image && (
-              <img
-                src={`http://localhost:3001${doctor.image}`}
-                alt={doctor.name}
-                className="w-24 h-24 rounded-full mt-4"
-              />
-            )}
-            <div className="mt-4">
-              <button
-                className="bg-green-500 text-white px-4 py-2 rounded mr-2"
-                onClick={() => handleEdit(doctor)}
-              >
-                Edit
-              </button>
-              <button
-                className="bg-red-500 text-white px-4 py-2 rounded"
-                onClick={() => handleDelete(doctor.id)}
-              >
-                Delete
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+interface Doctor {
+  id: number;
+  name: string;
+  title: string;
+  image?: string;
 }
 
-function DoctorForm({ doctor, onClose, onSuccess }) {
+interface DoctorFormProps {
+  doctor: Doctor | null;
+  onClose: () => void;
+  onSuccess: () => void;
+}
+
+const DoctorForm: React.FC<DoctorFormProps> = ({
+  doctor,
+  onClose,
+  onSuccess,
+}) => {
   const [form, setForm] = useState({
     name: doctor ? doctor.name : "",
     title: doctor ? doctor.title : "",
-    image: null,
+    image: null as File | null,
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
-    if (name === "image") {
+    if (name === "image" && files) {
       setForm({ ...form, image: files[0] });
     } else {
       setForm({ ...form, [name]: value });
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("name", form.name);
@@ -227,26 +134,115 @@ function DoctorForm({ doctor, onClose, onSuccess }) {
       </div>
     </div>
   );
-}
-
-DoctorForm.propTypes = {
-  doctor: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    title: PropTypes.string,
-    image: PropTypes.string,
-  }),
-  onClose: PropTypes.func.isRequired,
-  onSuccess: PropTypes.func.isRequired,
 };
 
-DoctorPanel.propTypes = {
-  doctors: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      image: PropTypes.string,
-    })
-  ),
+const DoctorPanel: React.FC = () => {
+  const [doctors, setDoctors] = useState<Doctor[]>([]);
+  const [editingDoctor, setEditingDoctor] = useState<Doctor | null>(null);
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const response = await axios.get(
+          "https://topaz-backend.vercel.app/api/doctors"
+        );
+        setDoctors(response.data.doctors);
+      } catch (error) {
+        console.error("Error fetching doctors:", error);
+      }
+    };
+
+    fetchDoctors();
+  }, []);
+
+  const handleEdit = (doctor: Doctor) => {
+    setEditingDoctor(doctor);
+    setShowPopup(true);
+  };
+
+  const handleAdd = () => {
+    setEditingDoctor(null);
+    setShowPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await axios.delete(`https://topaz-backend.vercel.app/api/doctors/${id}`);
+      setDoctors((prevDoctors) =>
+        prevDoctors.filter((doctor) => doctor.id !== id)
+      );
+    } catch (error) {
+      console.error("Error deleting doctor:", error);
+    }
+  };
+
+  return (
+    <div>
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+        onClick={handleAdd}
+      >
+        Add Doctor
+      </button>
+      {showPopup && (
+        <DoctorForm
+          doctor={editingDoctor}
+          onClose={handleClosePopup}
+          onSuccess={() => {
+            const fetchDoctors = async () => {
+              try {
+                const response = await axios.get(
+                  "https://topaz-backend.vercel.app/api/doctors"
+                );
+                setDoctors(response.data.doctors);
+              } catch (error) {
+                console.error("Error fetching doctors:", error);
+              }
+            };
+            fetchDoctors();
+          }}
+        />
+      )}
+      <h2 className="text-l font-bold mb-4 text-left mt-4">Эмч нар</h2>
+      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {doctors.map((doctor) => (
+          <li
+            key={doctor.id}
+            className="bg-white p-4 rounded shadow-md flex flex-col items-center"
+          >
+            <strong className="text-lg">{doctor.name}</strong>
+            <span className="text-gray-600">({doctor.title})</span>
+            {doctor.image && (
+              <img
+                src={`http://localhost:3001${doctor.image}`}
+                alt={doctor.name}
+                className="w-24 h-24 rounded-full mt-4"
+              />
+            )}
+            <div className="mt-4">
+              <button
+                className="bg-green-500 text-white px-4 py-2 rounded mr-2"
+                onClick={() => handleEdit(doctor)}
+              >
+                Edit
+              </button>
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded"
+                onClick={() => handleDelete(doctor.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
+
+export default DoctorPanel;
