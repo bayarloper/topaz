@@ -18,7 +18,7 @@ const GuestPricingPanel = () => {
   const fetchPricingPlans = async () => {
     try {
       const response = await axios.get<PricingPlan[]>(
-        "https://topaz-backend.vercel.app/api/pricing"
+        "http://13.229.91.93:3001/api/pricing"
       );
       setPricingPlans(response.data);
     } catch (error) {

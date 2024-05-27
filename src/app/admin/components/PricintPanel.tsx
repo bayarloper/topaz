@@ -26,7 +26,7 @@ const AdminPricingPanel = () => {
 
   const fetchPricingPlans = () => {
     axios
-      .get<PricingPlan[]>("https://topaz-backend.vercel.app/api/pricing")
+      .get<PricingPlan[]>("http://13.229.91.93:3001/api/pricing")
       .then((response) => {
         setPricingPlans(response.data);
       })
@@ -37,7 +37,7 @@ const AdminPricingPanel = () => {
 
   const handleDeletePlan = (id: string) => {
     axios
-      .delete(`https://topaz-backend.vercel.app/api/pricing/${id}`)
+      .delete(`http://13.229.91.93:3001/api/pricing/${id}`)
       .then(() => {
         fetchPricingPlans();
       })
@@ -65,10 +65,7 @@ const AdminPricingPanel = () => {
   const handleSavePlan = () => {
     if (showEditModal && planToEdit) {
       axios
-        .put(
-          `https://topaz-backend.vercel.app/api/pricing/${planToEdit.id}`,
-          formData
-        )
+        .put(`http://13.229.91.93:3001/api/pricing/${planToEdit.id}`, formData)
         .then(() => {
           fetchPricingPlans();
           setShowEditModal(false);
@@ -78,7 +75,7 @@ const AdminPricingPanel = () => {
         });
     } else {
       axios
-        .post("https://topaz-backend.vercel.app/api/pricing", formData)
+        .post("http://13.229.91.93:3001/api/pricing", formData)
         .then(() => {
           fetchPricingPlans();
           setShowAddModal(false);

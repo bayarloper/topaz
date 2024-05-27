@@ -19,7 +19,7 @@ const FAQs: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get<FAQ[]>("https://topaz-backend.vercel.app/api/faqs")
+      .get<FAQ[]>("http://13.229.91.93:3001/api/faqs")
       .then((res) => {
         setFAQs(res.data);
       })
@@ -30,7 +30,7 @@ const FAQs: React.FC = () => {
 
   const handleDeleteFAQ = (id: number): void => {
     axios
-      .delete(`https://topaz-backend.vercel.app/api/faqs/${id}`)
+      .delete(`http://13.229.91.93:3001/api/faqs/${id}`)
       .then((res) => {
         console.log(res.data);
         setFAQs((prevFAQs) => prevFAQs.filter((faq) => faq.id !== id));
@@ -57,14 +57,11 @@ const FAQs: React.FC = () => {
   const handleSaveFAQ = (): void => {
     if (showEditModal && faqToEdit) {
       axios
-        .put(
-          `https://topaz-backend.vercel.app/api/faqs/${faqToEdit.id}`,
-          formData
-        )
+        .put(`http://13.229.91.93:3001/api/faqs/${faqToEdit.id}`, formData)
         .then((res) => {
           console.log(res.data);
           axios
-            .get<FAQ[]>("https://topaz-backend.vercel.app/api/faqs")
+            .get<FAQ[]>("http://13.229.91.93:3001/api/faqs")
             .then((res) => {
               setFAQs(res.data);
               setShowEditModal(false);
@@ -78,11 +75,11 @@ const FAQs: React.FC = () => {
         });
     } else {
       axios
-        .post("https://topaz-backend.vercel.app/api/faqs", formData)
+        .post("http://13.229.91.93:3001/api/faqs", formData)
         .then((res) => {
           console.log(res.data);
           axios
-            .get<FAQ[]>("https://topaz-backend.vercel.app/api/faqs")
+            .get<FAQ[]>("http://13.229.91.93:3001/api/faqs")
             .then((res) => {
               setFAQs(res.data);
               setShowAddModal(false);

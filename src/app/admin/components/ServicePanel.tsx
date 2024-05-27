@@ -21,7 +21,7 @@ const Services: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get<Service[]>("https://topaz-backend.vercel.app/api/services")
+      .get<Service[]>("http://13.229.91.93:3001/api/services")
       .then((res) => {
         setServices(res.data);
       })
@@ -32,7 +32,7 @@ const Services: React.FC = () => {
 
   const handleDeleteService = (id: number): void => {
     axios
-      .delete(`https://topaz-backend.vercel.app/api/services/${id}`)
+      .delete(`http://13.229.91.93:3001/api/services/${id}`)
       .then((res) => {
         console.log(res.data);
         setServices((prevServices) =>
@@ -63,13 +63,13 @@ const Services: React.FC = () => {
     if (showEditModal && serviceToEdit) {
       axios
         .put(
-          `https://topaz-backend.vercel.app/api/services/${serviceToEdit.id}`,
+          `http://13.229.91.93:3001/api/services/${serviceToEdit.id}`,
           formData
         )
         .then((res) => {
           console.log(res.data);
           axios
-            .get<Service[]>("https://topaz-backend.vercel.app/api/services")
+            .get<Service[]>("http://13.229.91.93:3001/api/services")
             .then((res) => {
               setServices(res.data);
               setShowEditModal(false);
@@ -83,11 +83,11 @@ const Services: React.FC = () => {
         });
     } else {
       axios
-        .post("https://topaz-backend.vercel.app/api/services", formData)
+        .post("http://13.229.91.93:3001/api/services", formData)
         .then((res) => {
           console.log(res.data);
           axios
-            .get<Service[]>("https://topaz-backend.vercel.app/api/services")
+            .get<Service[]>("http://13.229.91.93:3001/api/services")
             .then((res) => {
               setServices(res.data);
               setShowAddModal(false);

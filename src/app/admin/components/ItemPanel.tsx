@@ -19,7 +19,7 @@ const PersonRequests: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get<Request[]>("https://topaz-backend.vercel.app/api/personReq")
+      .get<Request[]>("http://13.229.91.93:3001/api/personReq")
       .then((res) => {
         setRequests(res.data);
       })
@@ -30,7 +30,7 @@ const PersonRequests: React.FC = () => {
 
   const handleDeleteRequest = (id: number): void => {
     axios
-      .delete(`https://topaz-backend.vercel.app/api/personReq/${id}`)
+      .delete(`http://13.229.91.93:3001/api/personReq/${id}`)
       .then((res) => {
         console.log(res.data);
         setRequests((prevRequests) =>
@@ -60,13 +60,13 @@ const PersonRequests: React.FC = () => {
     if (showEditModal && requestToEdit) {
       axios
         .put(
-          `https://topaz-backend.vercel.app/api/personReq/${requestToEdit.id}`,
+          `http://13.229.91.93:3001/api/personReq/${requestToEdit.id}`,
           formData
         )
         .then((res) => {
           console.log(res.data);
           axios
-            .get<Request[]>("https://topaz-backend.vercel.app/api/personReq")
+            .get<Request[]>("http://13.229.91.93:3001/api/personReq")
             .then((res) => {
               setRequests(res.data);
               setShowEditModal(false);
@@ -80,11 +80,11 @@ const PersonRequests: React.FC = () => {
         });
     } else {
       axios
-        .post("https://topaz-backend.vercel.app/api/personReq", formData)
+        .post("http://13.229.91.93:3001/api/personReq", formData)
         .then((res) => {
           console.log(res.data);
           axios
-            .get<Request[]>("https://topaz-backend.vercel.app/api/personReq")
+            .get<Request[]>("http://13.229.91.93:3001/api/personReq")
             .then((res) => {
               setRequests(res.data);
               setShowAddModal(false);

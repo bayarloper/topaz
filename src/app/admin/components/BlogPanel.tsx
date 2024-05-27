@@ -19,7 +19,7 @@ const BlogPanel = () => {
   const fetchBlogPosts = async () => {
     try {
       const response = await axios.get<BlogPost[]>(
-        "https://topaz-backend.vercel.app/api/blogpost"
+        "http://13.229.91.93:3001/api/blogpost"
       );
       setBlogPosts(response.data);
     } catch (error) {
@@ -36,9 +36,7 @@ const BlogPanel = () => {
     }
 
     try {
-      await axios.delete(
-        `https://topaz-backend.vercel.app/api/blogpost/${postId}`
-      );
+      await axios.delete(`http://13.229.91.93:3001/api/blogpost/${postId}`);
       // After successful deletion, fetch the updated list of blog posts
       fetchBlogPosts();
     } catch (error) {

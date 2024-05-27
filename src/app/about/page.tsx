@@ -27,12 +27,9 @@ const About = () => {
 
   const fetchAboutData = async () => {
     try {
-      const response = await fetch(
-        "https://topaz-backend.vercel.app/api/about",
-        {
-          method: "GET",
-        }
-      );
+      const response = await fetch("http://13.229.91.93:3001/api/about", {
+        method: "GET",
+      });
       console.log(response);
       if (!response.ok) {
         throw new Error("Failed to fetch data");
@@ -46,12 +43,9 @@ const About = () => {
 
   const fetchBlogPosts = async () => {
     try {
-      const response = await fetch(
-        "https://topaz-backend.vercel.app/api/blogpost",
-        {
-          method: "GET",
-        }
-      );
+      const response = await fetch("http://13.229.91.93:3001/api/blogpost", {
+        method: "GET",
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch blog posts");
       }
