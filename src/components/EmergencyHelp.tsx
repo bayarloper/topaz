@@ -1,7 +1,7 @@
 // components/EmergencyHelp.js
 const EmergencyHelp = () => {
   return (
-    <section id="emergencyContainer" className="w-full py-12 bg-gray-50">
+    <section id="emergencyContainer" className="w-full py-5 bg-gray-50">
       <div>
         <div className="flex justify-center">
           <div className="w-full">

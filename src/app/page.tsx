@@ -21,28 +21,29 @@ export default function Home() {
       <main className="max-w-6xl mx-auto px-4 flex min-h-screen flex-col items-center">
         <ImageSlider images={images} />
         <Features />
-        <div className="mt-10 mb-10 grid gap-6 text-left lg:mb-0 lg:w-full lg:max-w-6xl lg:grid-cols-4 lg:text-left">
-          {cards.map((card, index) => (
-            <a
-              key={index}
-              href={card.href}
-              className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:shadow-lg hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-              rel="noopener noreferrer"
-            >
-              <h2 className="mb-3 text-xl font-semibold flex items-center">
-                {card.title}
-                <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none ml-2">
-                  <Image
-                    src={card.imgSrc}
-                    alt={card.imgAlt}
-                    width={24}
-                    height={24}
-                  />
-                </span>
-              </h2>
-            </a>
-          ))}
-        </div>
+        <div className="grid gap-6 mb-6 lg:mb-0 w-full max-w-6xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+  {cards.map((card, index) => (
+    <a
+      key={index}
+      href={card.href}
+      className="group relative rounded-lg border border-gray-200 bg-white p-5 transition-transform duration-200 ease-in-out hover:translate-y-[-5px] hover:shadow-xl dark:border-neutral-700 dark:bg-neutral-800/70"
+      rel="noopener noreferrer"
+    >
+      <h2 className="text-lg md:text-xl font-bold text-gray-800 dark:text-gray-200 flex items-center">
+        {card.title}
+        <span className="inline-block ml-2 transition-transform duration-200 group-hover:translate-x-2">
+          <Image
+            src={card.imgSrc}
+            alt={card.imgAlt}
+            width={24}
+            height={24}
+          />
+        </span>
+      </h2>
+    </a>
+  ))}
+</div>
+
         <EmergencyHelp />
       </main>
       <Footer />

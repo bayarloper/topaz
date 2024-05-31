@@ -31,7 +31,7 @@ export default function Services() {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto py-8">
+      <div className="container mx-auto">
         <div className="max-w-6xl mx-auto px-4">
           <section className="pb-12 pt-20 dark:bg-dark lg:pb-[90px] lg:pt-[px]">
             <div className="container mx-auto">

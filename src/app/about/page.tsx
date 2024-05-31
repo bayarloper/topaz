@@ -66,21 +66,20 @@ const About = () => {
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto py-8">
+      <div className="container mx-auto">
         <div className="max-w-6xl mx-auto px-4">
           <ImageSlider images={images} />
-
           {aboutData.map((item, index) => (
             <div key={index}>
-              <h1 className="text-xl font-bold mb-4">{item.title}</h1>
+              <h1 className="text-xl font-bold mb-5 mt-5">{item.title}</h1>
               <div
-                className="text-gray-700 mb-4"
+                className="text-gray-700 mb-5"
                 dangerouslySetInnerHTML={{ __html: item.description }}
               />{" "}
             </div>
           ))}
-          <h1 className="text-3xl font-bold mb-4">Мэдээ мэдээлэл</h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <h1 className="text-xl font-bold mb-5">Мэдээ мэдээлэл</h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-5">
             {blogPosts.map((post, index) => (
               <div
                 key={index}
@@ -95,7 +94,7 @@ const About = () => {
                   <h2 className="text font-bold text-gray-800 mb-2">
                     {post.title}
                   </h2>
-                  <p className="text-sm text-gray-700 leading-tight mb-4">
+                  <p className="text-sm text-gray-700 leading-tight mb-5">
                     {post.content}
                   </p>
                   <div className="flex justify-between items-center">

@@ -16,7 +16,7 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
   };
 
   return (
-    <div className="relative w-full mx-auto mt-5 mb-5 rounded-lg overflow-hidden shadow-lg">
+    <div className="relative w-full mx-auto mt-5 rounded-lg overflow-hidden shadow-lg">
       <div
         className="flex transition-transform duration-500"
         style={{ transform: `translateX(-${slideIndex * 100}%)` }}
