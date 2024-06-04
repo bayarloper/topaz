@@ -1,5 +1,14 @@
 // "use client";
 
+export default function Contact() {
+    return (
+        <></>
+    )
+}
+
+
+
+
 // import Navbar from "@/components/navbar";
 // import Footer from "@/components/footer";
 // import { useLoadScript, GoogleMap, Marker } from "@react-google-maps/api";
